@@ -10,10 +10,13 @@ const wishBtnUnique = "w"
 const anotherWishlistPageBtnUnique = "wp"
 const backToFriendsBtnUnique = "bf"
 
+var backBtn = tg.InlineButton{Unique: backToFriendsBtnUnique, Text: "Назад"}
+
 func registerShowListHandlers(bot *tg.Bot) {
 	bot.Handle(&showWishlistBtn, showList)
 	bot.Handle(getEndpointFromUnique(wishBtnUnique), showWish)
 	bot.Handle(getEndpointFromUnique(anotherWishlistPageBtnUnique), showAnotherWishlistPage)
+	bot.Handle(&backBtn, showFriendsList)
 }
 
 func showList(c tg.Context) error {
@@ -49,14 +52,14 @@ func sendWishlistMessage(c tg.Context, userId int64, page int64) error {
 	if pages == 0 {
 		return c.EditOrSend("пусто", &tg.ReplyMarkup{})
 	}
-	if page >= (wishlistSize+5)/6 {
+	if page >= pages {
 		page = pages - 1
 	}
 	wishlist, err := conn.GetWishlist(userId, page)
 	if err != nil {
 		return sendError(c, err)
 	}
-	keyboard, err := getWishlistKeyboard(wishlist, userId, page, pages)
+	keyboard, err := getWishlistKeyboard(wishlist, userId, page, pages, userId != c.Chat().ID)
 	if err != nil {
 		return sendError(c, err)
 	}
@@ -95,7 +98,7 @@ func getWishButton(buttonId int, wishId, page int64) tg.InlineButton {
 	return getNewBtnWithIdAndData(emojiNumbers[buttonId], wishBtnUnique, wishId, page)
 }
 
-func getWishlistKeyboard(list []storage.Wish, userId, page, pages int64) (*tg.ReplyMarkup, error) {
+func getWishlistKeyboard(list []storage.Wish, userId, page, pages int64, addBackBtn bool) (*tg.ReplyMarkup, error) {
 	keyboard := make([][]tg.InlineButton, 0)
 	for i := 0; i < (len(list)+2)/3 && i < 2; i++ {
 		row := make([]tg.InlineButton, 0)
@@ -113,6 +116,9 @@ func getWishlistKeyboard(list []storage.Wish, userId, page, pages int64) (*tg.Re
 		} else {
 			keyboard = append(keyboard, []tg.InlineButton{getPrevButton(userId, page)})
 		}
+	}
+	if addBackBtn {
+		keyboard = append(keyboard, []tg.InlineButton{backBtn})
 	}
 	return &tg.ReplyMarkup{InlineKeyboard: keyboard}, nil
 }
