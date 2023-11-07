@@ -71,19 +71,16 @@ func sendWishlistMessage(c tg.Context, userId int64, page int64) error {
 		for i, wish := range wishlist {
 			b.WriteString(emojiNumbers[i])
 			b.WriteRune(' ')
-			b.WriteString(wish.Title)
 			if wish.Url.Valid {
-				b.WriteRune('\n')
-				b.WriteString(wish.Url.String)
+				writeMDV2LinkToBuilder(&b, wish.Title, wish.Url.String)
+			} else {
+				b.WriteString(EscapeMarkdown(wish.Title))
 			}
 			b.WriteRune('\n')
 		}
 		addPageNumber(&b, page, pages)
 	}
-	if userId != c.Chat().ID {
-		// todo add back button
-	}
-	return c.EditOrSend(b.String(), keyboard)
+	return c.EditOrSend(b.String(), markdownV2, keyboard, tg.NoPreview)
 }
 
 func getNextButton(userId, page int64) tg.InlineButton {

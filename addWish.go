@@ -50,7 +50,7 @@ func readUrl(c tg.Context) error {
 	if err != nil {
 		return sendError(c, err)
 	}
-	_ = userStates.SetUserWholeState(c.Chat().ID, DefaultUserState)
+	err = userStates.DeleteUserState(c.Chat().ID)
 	if err != nil {
 		return sendError(c, err)
 	}
@@ -62,7 +62,7 @@ func setNoUrl(c tg.Context) error {
 	if err != nil {
 		return sendError(c, err)
 	}
-	err = userStates.SetUserWholeState(c.Chat().ID, DefaultUserState)
+	err = userStates.DeleteUserState(c.Chat().ID)
 	if err != nil {
 		return sendError(c, err)
 	}

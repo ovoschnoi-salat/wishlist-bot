@@ -12,6 +12,7 @@ import (
 )
 
 var (
+	markdownV2   = &tg.SendOptions{ParseMode: tg.ModeMarkdownV2}
 	emojiNumbers = []string{
 		"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣",
 	}
@@ -91,4 +92,35 @@ func calcHash(array []byte, userId int64, username string) []byte {
 
 func getEndpointFromUnique(unique string) string {
 	return "\f" + unique
+}
+
+func writeMDV2LinkToBuilder(sb *strings.Builder, title, url string) {
+	sb.WriteString("[")
+	sb.WriteString(EscapeMarkdown(title))
+	sb.WriteString("](")
+	sb.WriteString(EscapeMarkdownLink(url))
+	sb.WriteString(")")
+}
+
+// EscapeMarkdown escapes special symbols for Telegram MarkdownV2 syntax
+func EscapeMarkdown(s string) string {
+	var result []rune
+	for _, r := range s {
+		if strings.ContainsRune("_*[]()~`>#+-=|{}.!\\", r) {
+			result = append(result, '\\')
+		}
+		result = append(result, r)
+	}
+	return string(result)
+}
+
+func EscapeMarkdownLink(url string) string {
+	var result []rune
+	for _, r := range url {
+		if strings.ContainsRune(")\\", r) {
+			result = append(result, '\\')
+		}
+		result = append(result, r)
+	}
+	return string(result)
 }

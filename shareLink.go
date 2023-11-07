@@ -14,5 +14,5 @@ func shareLink(c tg.Context) error {
 	sb.WriteString("[Ссылка для твоих друзей](https://t.me/AddPresentBot?start=")
 	sb.WriteString(b64url.EncodeToString(calcHash([]byte(c.Chat().Username+"+"), c.Chat().ID, c.Chat().Username)))
 	sb.WriteString(")")
-	return c.Send(sb.String(), &tg.SendOptions{ParseMode: tg.ModeMarkdownV2})
+	return c.Send(sb.String(), markdownV2, tg.NoPreview)
 }
