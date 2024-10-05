@@ -1,0 +1,138 @@
+ru:
+  language_name: "Русский"
+
+  # main menu
+  main_menu: "Привет, это бот списка желаний\nПросто начни добавлять свои желания!"
+  # btns
+  show_lists_btn_text: "Показать списки"
+  show_friend_btn_text: "Показать друзей"
+  share_btn_text: "Поделиться"
+  settings_btn_text: "Настройки"
+
+
+
+  # list of friends
+  friends_list_msg: "Список друзей:"
+  empty_friends_list_msg: "Список друзей пуст"
+  # btns
+  add_friend_btn_text: "Добавить друга"
+
+
+
+  # my lists
+  my_lists_msg: "Мои списки"
+
+
+
+  # new list
+  new_list_msg: "Введите имя списка"
+  too_many_lists: "Вы можете создать только 6 списков."
+  # btns
+  add_list_btn_text: "Добавить список"
+
+
+
+  # friend lists
+  friends_lists_msg: "Списки пользователя %s:"
+  remove_friend_msg: "Удалить друга"
+  # btns
+  remove_friend_btn_text: "Удалить из друзей"
+
+
+
+  # my list
+  list_name_msg: "Имя списка: "
+  no_wishes_msg: "Пока что тут нет желаний"
+  # btns
+  add_wish_btn_text: "Добавить желание"
+  list_settings_btn_text: "Настройки списка"
+
+
+
+  # my list settings
+  list_access_msg: "Доступ к списку: "
+  open_list_access_msg: "список открыт для всех друзей"
+  private_list_access_msg: "список открыт только для выбранных друзей"
+  change_list_title_msg: "Введите название списка"
+  # btns
+  change_list_title_btn_text: "Изменить название"
+  make_list_private_btn_text: "Вернуть доступ по списку"
+  make_list_public_btn_text: "Открыть доступ всем друзям"
+  grant_friend_access_btn_text: "Управление доступами"
+  remove_list_btn_text: "Удалить список"
+  approve_list_removal_btn_text: "Подтвердить удаление"
+
+
+
+  # add wish
+  add_wish_msg: "Введите заголовок желания"
+
+
+
+  # friend list
+  list_owner_msg: "Владелец списка: "
+
+
+
+  # friends request
+  new_friends_request_msg: "Вам пришел запрос в друзья от "
+  friend_username_input_msg: "Введите имя пользователя:"
+  accept_friends_request_btn_text: "Принять"
+  reject_friends_request_btn_text: "Отклонить"
+
+
+
+  # my wish
+  my_wish_title_msg: "Заголовок: "
+  my_wish_description_msg: "Описание: "
+  my_wish_url_msg: "Ссылка: "
+  my_wish_price_msg: "Цена: "
+  edit_wish_title_msg: "Введите новый заголовок"
+  edit_wish_description_msg: "Введите новое описание"
+  edit_wish_url_msg: "Введите новую ссылку"
+  edit_wish_price_msg: "Введите новую цену"
+  my_wish_reservation_free_msg: "Это желание без бронирования"
+  my_wish_reservable_msg: "Это желание можно забронировать"
+  # btns
+  edit_wish_title_btn_text: "Изменить заголовок"
+  edit_wish_url_btn_text: "Изменить ссылку"
+  remove_wish_url_btn_text: "Удалить ссылку"
+  edit_wish_description_btn_text: "Изменить описание"
+  remove_wish_description_btn_text: "Удалить описание"
+  edit_wish_price_btn_text: "Изменить цену"
+  remove_wish_price_btn_text: "Удалить цену"
+  make_reservation_free_btn_text: "Убрать бронирование"
+  make_reservable_btn_text: "Вернуть бронирование"
+  delete_wish_btn_text: "Удалить желание"
+
+
+
+  # friend wish
+  friend_wish_reserved_msg: "Это желание забронировано"
+  # btns
+  book_wish_btn_text: "Забронировать"
+  cancel_booking_btn_text: "Отменить бронирование"
+
+
+
+  # settings
+  settings_msg: "Настройки"
+  name_input_msg: "Введите ваше имя (оно будет видно вашим друзьям в их списке друзей):"
+  name_input_current_name_msg: "Нынешнее имя: "
+  # btns
+  change_language_btn_text: "Изменить язык"
+  change_name_btn_text: "Изменить имя"
+  use_username_btn_text: "Использовать никнейм"
+
+
+
+  # other
+  page_number: "Страница"
+  cancel_btn_text: "Отмена"
+  back_btn_text: "Назад"
+  close_btn_text: "Закрыть"
+
+
+
+  # errors
+  empty_input_msg: "Empty input error"

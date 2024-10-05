@@ -2,13 +2,11 @@ package main
 
 import (
 	"encoding/base64"
-	"encoding/binary"
-	"errors"
-	"golang.org/x/crypto/sha3"
 	tg "gopkg.in/telebot.v3"
 	"regexp"
 	"strconv"
 	"strings"
+	f "wishlist_bot/repository"
 )
 
 var (
@@ -18,8 +16,6 @@ var (
 	}
 	b64    = base64.StdEncoding
 	b64url = base64.RawURLEncoding
-	prev   = "<<"
-	next   = ">>"
 	rxURL  = regexp.MustCompile(URL)
 	URL    = "^(https?:\\/\\/)?" +
 		"(([a-zA-Z0-9]([a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?\\.)+[a-zA-Z0-9]([a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?|" +
@@ -31,67 +27,35 @@ var (
 		"(#([a-zA-Z0-9-._~:@!$&'()*+,;=/\\?]|%[a-fA-f0-9]{2})*)?$"
 )
 
-func addPageNumber(str *strings.Builder, index, all int64) {
-	str.WriteString("\n страница ")
+func addPageNumber(str *strings.Builder, lang string, index, all int64) {
+	str.WriteString("\n " + localizer.Get(lang, "page_number") + " ")
 	str.WriteString(strconv.FormatInt(index+1, 10))
 	str.WriteRune('/')
 	str.WriteString(strconv.FormatInt(all, 10))
 }
 
-func getNewBtn(text, unique, data string) tg.InlineButton {
-	return tg.InlineButton{Text: text, Unique: unique, Data: data}
+//func calcHash(array []byte, userId int64, username string) []byte {
+//	h := sha3.New224()
+//	id := make([]byte, 8)
+//	binary.LittleEndian.PutUint64(id, uint64(userId))
+//	h.Write(id)
+//	h.Write([]byte(username))
+//	binary.BigEndian.PutUint64(id, uint64(userId))
+//	h.Write(id)
+//	return h.Sum(array)
+//}
+
+func createMDV2Link(title, url string) string {
+	return "[" + EscapeMarkdown(title) + "](" + EscapeMarkdownLink(url) + ")"
 }
 
-func getBtnWithData(btn tg.InlineButton, data string) tg.InlineButton {
-	return getNewBtn(btn.Text, btn.Unique, data)
-}
-
-func getBtnWithId(btn tg.InlineButton, id int64) tg.InlineButton {
-	return getBtnWithData(btn, strconv.FormatInt(id, 16))
-}
-
-func getBtnWithIdAndData(btn tg.InlineButton, id, data int64) tg.InlineButton {
-	return getBtnWithData(btn, strconv.FormatInt(id, 16)+":"+strconv.FormatInt(data, 16))
-}
-
-func getNewBtnWithId(text, unique string, id int64) tg.InlineButton {
-	return getNewBtn(text, unique, strconv.FormatInt(id, 16))
-}
-
-func getNewBtnWithIdAndData(text, unique string, id, data int64) tg.InlineButton {
-	return getNewBtn(text, unique, strconv.FormatInt(id, 16)+":"+strconv.FormatInt(data, 16))
-}
-
-func getId(c tg.Context) (int64, error) {
-	return strconv.ParseInt(c.Data(), 16, 0)
-}
-
-func getIdAndData(c tg.Context) (userId, wishId int64, err error) {
-	array := strings.Split(c.Data(), ":")
-	if len(array) != 2 {
-		return 0, 0, errors.New("wrong data passed:" + c.Data())
+func buildListsMsg(sb *strings.Builder, lists []f.List) {
+	for i := range lists {
+		sb.WriteByte('\n')
+		sb.WriteString(strconv.Itoa(i + 1))
+		sb.WriteByte(' ')
+		sb.WriteString(lists[i].Title)
 	}
-	userId, err = strconv.ParseInt(array[0], 16, 0)
-	if err != nil {
-		return
-	}
-	wishId, err = strconv.ParseInt(array[1], 16, 0)
-	return
-}
-
-func calcHash(array []byte, userId int64, username string) []byte {
-	h := sha3.New224()
-	id := make([]byte, 8)
-	binary.LittleEndian.PutUint64(id, uint64(userId))
-	h.Write(id)
-	h.Write([]byte(username))
-	binary.BigEndian.PutUint64(id, uint64(userId))
-	h.Write(id)
-	return h.Sum(array)
-}
-
-func getEndpointFromUnique(unique string) string {
-	return "\f" + unique
 }
 
 func writeMDV2LinkToBuilder(sb *strings.Builder, title, url string) {
@@ -99,6 +63,17 @@ func writeMDV2LinkToBuilder(sb *strings.Builder, title, url string) {
 	sb.WriteString(EscapeMarkdown(title))
 	sb.WriteString("](")
 	sb.WriteString(EscapeMarkdownLink(url))
+	sb.WriteString(")")
+}
+func writeMDV2UserLinkToBuilder(sb *strings.Builder, user *f.User) {
+	sb.WriteString("[")
+	if user.Name != "" {
+		sb.WriteString(EscapeMarkdown(user.Name))
+	} else {
+		sb.WriteString(EscapeMarkdown("@" + user.Username))
+	}
+	sb.WriteString("](")
+	sb.WriteString(EscapeMarkdownLink("t.me/" + user.Username))
 	sb.WriteString(")")
 }
 
@@ -123,4 +98,47 @@ func EscapeMarkdownLink(url string) string {
 		result = append(result, r)
 	}
 	return string(result)
+}
+
+func GetUserState(id int64) UserCtx {
+	ctx, ok := ctxStorage.Get(id)
+	if ok {
+		return ctx
+	}
+	user, err := f.GetUserById(db, id)
+	if err != nil {
+		return UserCtx{UserId: id}
+	}
+	res := UserCtx{
+		UserId:   id,
+		Name:     user.Name,
+		Language: user.Language,
+	}
+	return res
+}
+
+func getListsSelectors(lists []f.List, btn MySelectorBtn) [][]tg.InlineButton {
+	keyboard := make([][]tg.InlineButton, 0, (len(lists)+2)/3+2)
+	if len(lists) == 4 {
+		keyboard = append(keyboard,
+			[]tg.InlineButton{btn.GetInlineButton(0, lists[0].ID), btn.GetInlineButton(1, lists[1].ID)},
+			[]tg.InlineButton{btn.GetInlineButton(2, lists[2].ID), btn.GetInlineButton(3, lists[3].ID)},
+		)
+	} else {
+		if len(lists) > 0 {
+			row := make([]tg.InlineButton, len(lists))
+			for i := 0; i < len(lists) && i < 3; i++ {
+				row[i] = btn.GetInlineButton(i, lists[i].ID)
+			}
+			keyboard = append(keyboard, row)
+		}
+		if len(lists) > 4 {
+			row := make([]tg.InlineButton, len(lists)-3)
+			for i := 3; i < len(lists); i++ {
+				row[i] = btn.GetInlineButton(i, lists[i].ID)
+			}
+			keyboard = append(keyboard, row)
+		}
+	}
+	return keyboard
 }

@@ -1,0 +1,138 @@
+en:
+  language_name: "English"
+
+  # main Menu
+  main_menu: "Main menu"
+  # btns
+  show_lists_btn_text: "Show lists"
+  show_friend_btn_text: "Show friends"
+  share_btn_text: "Share"
+  settings_btn_text: "Settings"
+
+
+
+  # list of friends
+  friends_list_msg: "Friends list:"
+  empty_friends_list_msg: "Empty friends list"
+  # btns
+  add_friend_btn_text: "Add friend"
+
+
+
+  # my lists
+  my_lists_msg: "My lists"
+
+
+
+  # new list
+  new_list_msg: "Name new list:"
+  too_many_lists: "You can only create 6 lists"
+  # btns
+  add_list_btn_text: "Add list"
+
+
+
+  # friend lists
+  friends_lists_msg: "%s user lists:"
+  remove_friend_msg: "Delete friend"
+  #btns
+  remove_friend_btn_text: "Delete friend"
+
+
+
+  # my list
+  list_name_msg: "List name: "
+  no_wishes_msg: "No wishes"
+  # btns
+  add_wish_btn_text: "Add wish"
+  list_settings_btn_text: "List settings"
+
+
+
+  # my list settings
+  list_access_msg: "List access: "
+  open_list_access_msg: "list is open to all friends"
+  private_list_access_msg: "list is open only for chosen friends"
+  change_list_title_msg: "Enter list title"
+  # btns
+  change_list_title_btn_text: "Change title"
+  make_list_private_btn_text: "return access by list"
+  make_list_public_btn_text: "Open access to all friends"
+  grant_friend_access_btn_text: "Access management"
+  remove_list_btn_text: "Delete list"
+  approve_list_removal_btn_text: "Confirm deletion"
+
+
+
+  # add wish
+  add_wish_msg: "Enter new wish's title"
+
+
+
+  # friend list
+  list_owner_msg: "Owner: "
+
+
+
+  # friends request
+  new_friends_request_msg: "You received new friends request from "
+  friend_username_input_msg: "Enter friend's username:"
+  accept_friends_request_btn_text: "Accept"
+  reject_friends_request_btn_text: "Reject"
+
+
+
+  # my wish
+  my_wish_title_msg: "Title: "
+  my_wish_description_msg: "Description: "
+  my_wish_url_msg: "Link: "
+  my_wish_price_msg: "Price: "
+  edit_wish_title_msg: ""
+  edit_wish_description_msg: ""
+  edit_wish_url_msg: ""
+  edit_wish_price_msg: ""
+  my_wish_reservation_free_msg: ""
+  my_wish_reservable_msg: ""
+  # btns
+  edit_wish_title_btn_text: ""
+  edit_wish_url_btn_text: ""
+  remove_wish_url_btn_text: ""
+  edit_wish_description_btn_text: ""
+  remove_wish_description_btn_text: ""
+  edit_wish_price_btn_text: ""
+  remove_wish_price_btn_text: ""
+  make_reservation_free_btn_text: ""
+  make_reservable_btn_text: ""
+  delete_wish_btn_text: ""
+
+
+
+  # friend wish
+  friend_wish_reserved_msg: "This wish is reserved"
+  # btns
+  book_wish_btn_text: "Reserve"
+  cancel_booking_btn_text: "Cancel reservation"
+
+
+
+  # settings
+  settings_msg: "Settings"
+  name_input_msg: "Enter your name (it will be visible to your friends on their friends' list):"
+  name_input_current_name_msg: "Current name: "
+  # btns
+  change_language_btn_text: "Change language"
+  change_name_btn_text: "Change name"
+  use_username_btn_text: "Use username"
+
+
+
+  # other
+  page_number: "Page"
+  cancel_btn_text: "Cancel"
+  back_btn_text: "Back"
+  close_btn_text: "Close"
+
+
+
+  # errors
+  empty_input_msg: "Empty input error"

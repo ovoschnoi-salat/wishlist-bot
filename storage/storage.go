@@ -1,37 +1,65 @@
 package storage
 
-import "database/sql"
+import (
+	"encoding/gob"
+	"os"
+	"sync"
+)
 
-type User struct {
-	Id       int64
-	Username string
+type Storage[T any] struct {
+	m      sync.Mutex
+	states map[int64]T
 }
 
-type Wish struct {
-	Id         int64
-	Owner      int64
-	Title      string
-	Url        sql.NullString
-	ReservedBy sql.NullInt64
+func NewStorage[T any]() *Storage[T] {
+	return &Storage[T]{
+		states: make(map[int64]T),
+	}
 }
 
-type Storage interface {
-	AddUser(id int64, username string) error
-	GetUserById(id int64, username string) (User, error)
-	GetUserByUsername(id int64, username string) (User, error)
-	DeleteUser(id int64) error
-	AddWish(userId int64, title, url string) (int64, error)
-	GetWish(wishId int64) (Wish, error)
-	EditWish(wishId int64, title, url string) error
-	EditWishUrl(wishId int64, url string) error
-	EditWishTitle(wishId int64, title string) error
-	ReserveWish(wishId, userId int64) error
-	UndoReservation(wishId int64) error
-	DeleteWish(wishId int64) error
-	GetWishlist(id, page int64) ([]Wish, error)
-	GetWishlistSize(id int64) (int64, error)
-	GetFriendsList(id, page int64) ([]User, error)
-	GetFriendsListSize(id int64) (int64, error)
-	AddFriend(id, friendId int64) error
-	DeleteFriend(id, friendId int64) error
+func (s *Storage[T]) Set(id int64, state T) {
+	s.m.Lock()
+	defer s.m.Unlock()
+	s.states[id] = state
+}
+
+func (s *Storage[T]) Get(id int64) (T, bool) {
+	s.m.Lock()
+	defer s.m.Unlock()
+	state, ok := s.states[id]
+	return state, ok
+}
+
+func (s *Storage[T]) DeleteUserState(id int64) {
+	s.m.Lock()
+	defer s.m.Unlock()
+	delete(s.states, id)
+}
+
+const fileName = "storage.data"
+
+func (s *Storage[T]) Load() error {
+	s.m.Lock()
+	defer s.m.Unlock()
+	file, err := os.Open(fileName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	defer file.Close()
+	decoder := gob.NewDecoder(file)
+	return decoder.Decode(&s.states)
+}
+
+func (s *Storage[T]) Save() error {
+	s.m.Lock()
+	defer s.m.Unlock()
+	file, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	if err != nil {
+		return err
+	}
+	decoder := gob.NewEncoder(file)
+	return decoder.Encode(s.states)
 }
