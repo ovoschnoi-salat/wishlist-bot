@@ -136,3 +136,4 @@ en:
 
   # errors
   empty_input_msg: "Empty input error"
+  not_implemented_msg: "Not implemented yet"

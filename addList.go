@@ -30,8 +30,8 @@ func readNewListTitleHandler(c tg.Context) error {
 	list := repository.List{Title: c.Text(), OwnerID: ctx.UserId}
 	err := repository.AddList(db, &list)
 	if err != nil {
-		sendAlert(c, "error creating list: "+err.Error())
-		return nil
+		return sendError(c, &ctx, "error creating list: "+err.Error())
 	}
-	return sendMainMenu(c, &ctx) // TODO show list
+	ctx.ListId = list.ID
+	return sendMyList(c, &ctx)
 }

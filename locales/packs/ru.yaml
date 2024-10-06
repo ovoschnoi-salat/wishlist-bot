@@ -135,4 +135,5 @@ ru:
 
 
   # errors
-  empty_input_msg: "Empty input error"
+  empty_input_msg: "Получено пустое сообщение"
+  not_implemented_msg: "Пока что этот функционал не реализован"

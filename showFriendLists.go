@@ -55,7 +55,7 @@ func removeFriendHandler(c tg.Context) error {
 	}
 	writeMDV2UserLinkToBuilder(&sb, &user)
 	sb.WriteByte('?')
-	return myEditOrSend(c, &ctx, sb.String(), keyboard)
+	return myEditOrSend(c, &ctx, sb.String(), keyboard, tg.ModeMarkdownV2)
 }
 
 func approveFriendRemovalHandler(c tg.Context) error {

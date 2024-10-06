@@ -3,10 +3,7 @@ package main
 import tg "gopkg.in/telebot.v3"
 
 func showMyListAccessHandler(c tg.Context) error {
-	sendAlert(c, "not implemented")
-	return nil
-	//keyboard := getMyListAccessKeyboard()
-
+	return sendNotImplemented(c)
 }
 
 func getMyListAccessKeyboard(ctx *UserCtx) *tg.ReplyMarkup {

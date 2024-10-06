@@ -84,10 +84,7 @@ func main() {
 
 func registerHandlers(bot *tg.Bot) {
 	bot.Handle("/start", startHandler)
-	bot.Handle("/help", func(c tg.Context) error {
-		// TODO
-		panic("not implemented")
-	})
+	bot.Handle("/help", sendNotImplemented)
 	bot.Handle(tg.OnText, textHandler)
 	registerAllHandlers(bot)
 }

@@ -50,19 +50,14 @@ func langHandler(c tg.Context) error {
 	}
 	ctx.Language = lang
 
-	if ctx.State == StartState {
-		ctx.State = DefaultState
-		err := repository.AddUser(db, ctx.UserId, c.Chat().Username, lang)
-		if err != nil {
-			log.Println(err)
-			return sendError(c, &ctx, "Error: "+err.Error())
-		}
-		return sendMainMenu(c, &ctx)
-	}
 	err := repository.UpdateUserLanguage(db, ctx.UserId, lang)
 	if err != nil {
 		log.Println(err)
 		return sendError(c, &ctx, "Error: "+err.Error())
+	}
+	if ctx.State == StartState {
+		ctx.State = DefaultState
+		return sendMainMenu(c, &ctx)
 	}
 	return sendSettings(c, &ctx)
 }

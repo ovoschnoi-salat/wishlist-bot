@@ -13,6 +13,11 @@ func registerMiscHandlers(b *tg.Bot) {
 	b.Handle(&closeErrorBtn, closeErrorHandler)
 }
 
+func sendNotImplemented(c tg.Context) error {
+	ctx := GetUserState(c.Chat().ID)
+	return sendError(c, &ctx, localizer.Get(ctx.Language, "not_implemented_msg"))
+}
+
 func cancel(c tg.Context) error {
 	ctx := GetUserState(c.Chat().ID)
 	ctx.State = DefaultState

@@ -43,10 +43,12 @@ func sendFriendRequest(c tg.Context) error {
 	username = strings.ToLower(username)
 	username = strings.TrimPrefix(username, "@")
 	username = strings.TrimPrefix(username, "https://t.me/")
+	username = strings.TrimPrefix(username, "http://t.me/")
 	user, err := repository.GetUserByUsername(db, username)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// todo suggest invitation link
+			ctx.State = DefaultState
+			return sendSuggestInvitationLink(c, &ctx, username)
 		}
 		return sendError(c, &ctx, fmt.Sprintf("error getting user %s: %v", username, err))
 	}
@@ -100,4 +102,8 @@ func acceptFriendsRequest(c tg.Context) error {
 
 func rejectFriendsRequest(c tg.Context) error {
 	return c.Delete()
+}
+
+func sendSuggestInvitationLink(c tg.Context, ctx *UserCtx, username string) error {
+	return sendNotImplemented(c)
 }

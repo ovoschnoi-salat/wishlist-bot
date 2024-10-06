@@ -60,7 +60,7 @@ func sendListOfFriendsMessage(c tg.Context, ctx *UserCtx) error {
 	keyboard := getFriendsKeyboard(friendsList, ctx.Language, ctx.FriendsPageNumber, pages)
 
 	b := strings.Builder{}
-	b.WriteString(localizer.Get(ctx.Language, "friends_list_msg"+"\n\n"))
+	b.WriteString(localizer.Get(ctx.Language, "friends_list_msg") + "\n\n")
 	if len(friendsList) == 0 {
 		b.WriteString(localizer.Get(ctx.Language, "empty_friends_list_msg"))
 	} else {

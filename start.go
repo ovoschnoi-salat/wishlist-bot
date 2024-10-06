@@ -4,6 +4,7 @@ import (
 	tg "gopkg.in/telebot.v3"
 	"log"
 	"time"
+	"wishlist_bot/repository"
 )
 
 func startHandler(c tg.Context) error {
@@ -15,7 +16,15 @@ func startHandler(c tg.Context) error {
 		}
 	}()
 	ctx := GetUserState(c.Chat().ID)
+	if c.Data() != "" {
+		log.Println(c.Data())
+	}
 	if ctx.Language == "" {
+		err := repository.AddUser(db, ctx.UserId, c.Chat().Username, "")
+		if err != nil {
+			log.Println("error adding user to database: " + err.Error())
+			return sendError(c, &ctx, "Error: "+err.Error())
+		}
 		ctx.State = StartState
 		return sendLanguageMenu(c, &ctx)
 	}
