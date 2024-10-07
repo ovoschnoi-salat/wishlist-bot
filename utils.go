@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/cipher"
 	"encoding/base64"
 	tg "gopkg.in/telebot.v3"
 	"regexp"
@@ -14,10 +15,11 @@ var (
 	emojiNumbers = []string{
 		"1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣",
 	}
-	b64    = base64.StdEncoding
-	b64url = base64.RawURLEncoding
-	rxURL  = regexp.MustCompile(URL)
-	URL    = "^(https?:\\/\\/)?" +
+	aesCipher cipher.Block
+	b64       = base64.StdEncoding
+	b64url    = base64.RawURLEncoding
+	rxURL     = regexp.MustCompile(URL)
+	URL       = "^(https?:\\/\\/)?" +
 		"(([a-zA-Z0-9]([a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?\\.)+[a-zA-Z0-9]([a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?|" +
 		"([а-яА-Я0-9]([а-яА-Я0-9-]{0,253}[а-яА-Я0-9])?\\.)+(рф|РФ)|" +
 		"((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}" +
@@ -52,7 +54,7 @@ func createMDV2Link(title, url string) string {
 func buildListsMsg(sb *strings.Builder, lists []f.List) {
 	for i := range lists {
 		sb.WriteByte('\n')
-		sb.WriteString(strconv.Itoa(i + 1))
+		sb.WriteString(emojiNumbers[i])
 		sb.WriteByte(' ')
 		sb.WriteString(lists[i].Title)
 	}
@@ -66,15 +68,11 @@ func writeMDV2LinkToBuilder(sb *strings.Builder, title, url string) {
 	sb.WriteString(")")
 }
 func writeMDV2UserLinkToBuilder(sb *strings.Builder, user *f.User) {
-	sb.WriteString("[")
 	if user.Name != "" {
-		sb.WriteString(EscapeMarkdown(user.Name))
+		writeMDV2LinkToBuilder(sb, user.Name, "t.me/"+user.Username)
 	} else {
-		sb.WriteString(EscapeMarkdown("@" + user.Username))
+		writeMDV2LinkToBuilder(sb, "@"+user.Username, "t.me/"+user.Username)
 	}
-	sb.WriteString("](")
-	sb.WriteString(EscapeMarkdownLink("t.me/" + user.Username))
-	sb.WriteString(")")
 }
 
 // EscapeMarkdown escapes special symbols for Telegram MarkdownV2 syntax

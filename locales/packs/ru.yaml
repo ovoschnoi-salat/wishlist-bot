@@ -50,6 +50,7 @@ ru:
 
 
   # my list settings
+  list_settings_msg: "Настройки списка: "
   list_access_msg: "Доступ к списку: "
   open_list_access_msg: "список открыт для всех друзей"
   private_list_access_msg: "список открыт только для выбранных друзей"
@@ -76,7 +77,10 @@ ru:
 
   # friends request
   new_friends_request_msg: "Вам пришел запрос в друзья от "
-  friend_username_input_msg: "Введите имя пользователя:"
+  friend_username_input_msg: "Введите никнейм пользователя в телеграм:"
+  suggest_invitation_link: " еще не зарегистрировался в этом боте. Вы можете поделиться этой ссылкой и этот пользователь станет вашем другом как только перейдет по ней: "
+  invitation_link: "ссылка"
+  # btns
   accept_friends_request_btn_text: "Принять"
   reject_friends_request_btn_text: "Отклонить"
 

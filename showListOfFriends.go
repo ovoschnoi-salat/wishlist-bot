@@ -28,7 +28,6 @@ func showListOfFriendsHandler(c tg.Context) error {
 	ctx := GetUserState(c.Chat().ID)
 	ctx.FriendId = 0
 	ctx.FriendsPageNumber = 0
-	log.Println(ctx)
 	return sendListOfFriendsMessage(c, &ctx)
 }
 

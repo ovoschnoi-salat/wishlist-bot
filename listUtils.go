@@ -2,7 +2,6 @@ package main
 
 import (
 	tg "gopkg.in/telebot.v3"
-	"strconv"
 	"strings"
 	"wishlist_bot/repository"
 )
@@ -12,7 +11,7 @@ func writeWishesToBuilder(sb *strings.Builder, ctx *UserCtx, wishes []repository
 		sb.WriteString(localizer.Get(ctx.Language, "no_wishes_msg"))
 	} else {
 		for i, wish := range wishes {
-			sb.WriteString(strconv.Itoa(i + 1))
+			sb.WriteString(emojiNumbers[i])
 			sb.WriteByte(' ')
 			if wish.Url != "" {
 				writeMDV2LinkToBuilder(sb, wish.Title, wish.Url)

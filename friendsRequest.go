@@ -105,5 +105,39 @@ func rejectFriendsRequest(c tg.Context) error {
 }
 
 func sendSuggestInvitationLink(c tg.Context, ctx *UserCtx, username string) error {
-	return sendNotImplemented(c)
+	msg := strings.Builder{}
+	writeMDV2LinkToBuilder(&msg, username, "https://t.me/"+username)
+	msg.WriteString(EscapeMarkdown(localizer.Get(ctx.Language, "suggest_invitation_link")))
+	link := buildInviteLink(c.Chat().Username, username)
+	writeMDV2LinkToBuilder(&msg, localizer.Get(ctx.Language, "invitation_link"), link)
+	keyboard := &tg.ReplyMarkup{
+		InlineKeyboard: [][]tg.InlineButton{
+			{backToListOfFriendsBtn.GetInlineButton(ctx.Language)},
+		},
+	}
+	return myEditOrSend(c, ctx, msg.String(), keyboard, tg.ModeMarkdownV2)
+}
+
+func buildInviteLink(from, to string) string {
+	linkBuilder := strings.Builder{}
+	linkBuilder.WriteString("https://t.me/GiftSyncBot?start=")
+	usernames := []byte(from + ":" + to)
+	usernamesEncoded := make([]byte, b64url.EncodedLen(len(usernames)))
+	b64url.Encode(usernamesEncoded, usernames)
+	linkBuilder.Write(usernamesEncoded)
+	return linkBuilder.String()
+}
+
+func parseInviteLink(link string) (from string, to string, err error) {
+	//link = strings.TrimPrefix(link, "https://t.me/GiftSyncBot?start=")
+	usernamesDecoded := make([]byte, b64url.DecodedLen(len(link)))
+	_, err = b64url.Decode(usernamesDecoded, []byte(link))
+	if err != nil {
+		return
+	}
+	usernames := strings.Split(string(usernamesDecoded), ":")
+	if len(usernames) != 2 {
+		return "", "", fmt.Errorf("invalid invite link")
+	}
+	return usernames[0], usernames[1], nil
 }

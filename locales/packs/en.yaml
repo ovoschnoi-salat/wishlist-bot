@@ -50,7 +50,8 @@ en:
 
 
   # my list settings
-  list_access_msg: "List access: "
+  list_settings_msg: "List settings:"
+  list_access_msg: "List access:"
   open_list_access_msg: "list is open to all friends"
   private_list_access_msg: "list is open only for chosen friends"
   change_list_title_msg: "Enter list title"
@@ -76,7 +77,10 @@ en:
 
   # friends request
   new_friends_request_msg: "You received new friends request from "
-  friend_username_input_msg: "Enter friend's username:"
+  friend_username_input_msg: "Enter friend's telegram username:"
+  suggest_invitation_link: " hasn't signed up for this bot yet. You can share this link with him and he will become your friend as soon as he clicks on it: "
+  invitation_link: "link"
+  # btns
   accept_friends_request_btn_text: "Accept"
   reject_friends_request_btn_text: "Reject"
 

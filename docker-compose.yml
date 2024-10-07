@@ -20,6 +20,8 @@ services:
       - postgres
     links:
       - postgres
+    volumes:
+      - ./data:/data
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest

@@ -36,7 +36,7 @@ func (s *Storage[T]) DeleteUserState(id int64) {
 	delete(s.states, id)
 }
 
-const fileName = "storage.data"
+const fileName = "data/storage.data"
 
 func (s *Storage[T]) Load() error {
 	s.m.Lock()

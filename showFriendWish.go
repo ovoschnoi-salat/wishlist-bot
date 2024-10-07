@@ -45,20 +45,24 @@ func sendFriendWish(c tg.Context, ctx *UserCtx) error {
 	sb.WriteString(wish.Title)
 	sb.WriteByte('\n')
 	if wish.Url != "" {
+		sb.WriteByte('\n')
 		sb.WriteString(localizer.Get(ctx.Language, "my_wish_url_msg"))
 		sb.WriteString(wish.Url)
 		sb.WriteByte('\n')
 	}
 	if wish.Description != "" {
+		sb.WriteByte('\n')
 		sb.WriteString(localizer.Get(ctx.Language, "my_wish_description_msg"))
 		sb.WriteString(wish.Description)
 		sb.WriteByte('\n')
 	}
 	if wish.Price != "" {
+		sb.WriteByte('\n')
 		sb.WriteString(localizer.Get(ctx.Language, "my_wish_price_msg"))
 		sb.WriteString(wish.Price)
 		sb.WriteByte('\n')
 	}
+	sb.WriteByte('\n')
 	if wish.ReservationFree {
 		sb.WriteString(localizer.Get(ctx.Language, "my_wish_reservation_free_msg"))
 	} else if wish.ReservedBy == 0 {

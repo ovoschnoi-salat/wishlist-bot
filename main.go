@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/aes"
 	"log"
 	"os"
 	"os/signal"
@@ -31,6 +32,14 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	if os.Getenv("AES_KEY") == "" {
+		log.Fatalln("AES_KEY is empty")
+	}
+	cipher, err := aes.NewCipher([]byte(os.Getenv("AES_KEY")))
+	if err != nil {
+		log.Fatalln("error creating cipher: " + err.Error())
+	}
+	aesCipher = cipher
 
 	err = ctxStorage.Load()
 	if err != nil {
