@@ -14,7 +14,7 @@ services:
     container_name: tg-bot
     build: Dockerfile
     environment:
-      TOKEN: "${TOKEN}"
+      TOKEN: "${TG_TOKEN}"
       PG: "host=postgres user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB_NAME} port=${POSTGRES_PORT}"
     depends_on:
       - postgres
