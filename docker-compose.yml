@@ -12,7 +12,7 @@ services:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
   tg-bot:
     container_name: tg-bot
-    build: Dockerfile
+    build: ./
     environment:
       TOKEN: "${TG_TOKEN}"
       PG: "host=postgres user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB_NAME} port=${POSTGRES_PORT}"
