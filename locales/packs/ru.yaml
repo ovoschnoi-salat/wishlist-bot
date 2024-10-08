@@ -80,6 +80,7 @@ ru:
   friend_username_input_msg: "Введите никнейм пользователя в телеграм:"
   suggest_invitation_link: " еще не зарегистрировался в этом боте. Вы можете поделиться этой ссылкой и этот пользователь станет вашем другом как только перейдет по ней: "
   invitation_link: "ссылка"
+  new_friends_request_sent_msg: "Запрос отправлен "
   # btns
   accept_friends_request_btn_text: "Принять"
   reject_friends_request_btn_text: "Отклонить"

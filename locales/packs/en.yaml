@@ -80,6 +80,7 @@ en:
   friend_username_input_msg: "Enter friend's telegram username:"
   suggest_invitation_link: " hasn't signed up for this bot yet. You can share this link with him and he will become your friend as soon as he clicks on it: "
   invitation_link: "link"
+  new_friends_request_sent_msg: "Request sent to "
   # btns
   accept_friends_request_btn_text: "Accept"
   reject_friends_request_btn_text: "Reject"

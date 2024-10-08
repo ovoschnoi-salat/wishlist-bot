@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	tg "gopkg.in/telebot.v3"
-	"log"
 	"strconv"
 	"strings"
 	"wishlist_bot/repository"
@@ -256,14 +255,12 @@ func deleteWishHandler(c tg.Context) error {
 }
 
 func makeWishReservationFreeHandler(c tg.Context) error {
-	log.Println("makeWishReservationFreeHandler")
 	ctx := GetUserState(c.Chat().ID)
 	err := repository.MakeWishReservationFree(db, ctx.WishId)
 	if err != nil {
 		sendAlert(c, fmt.Sprintf("error updating wish: %v", err))
 		return nil
 	}
-	log.Println("makeWishReservationFreeHandler finished")
 	return sendMyWish(c, &ctx)
 }
 
