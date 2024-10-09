@@ -23,7 +23,7 @@ services:
     links:
       - postgres
     volumes:
-      - ./data:/data
+      - ./data:/home/nonroot/data
   dozzle:
     container_name: dozzle
     image: amir20/dozzle:latest
