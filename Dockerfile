@@ -24,4 +24,5 @@ COPY --from=build-stage /app /app
 
 USER nonroot:nonroot
 
-ENTRYPOINT ["/app"]
+# ENTRYPOINT ["/app"]
+ENTRYPOINT ["sh", "-c", "chown -R nonroot:nonroot /data && exec /app"]

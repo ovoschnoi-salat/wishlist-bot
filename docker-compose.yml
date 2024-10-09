@@ -12,6 +12,7 @@ services:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
   tg-bot:
     container_name: tg-bot
+    restart: unless-stopped
     build: ./
     environment:
       TOKEN: "${TG_TOKEN}"
