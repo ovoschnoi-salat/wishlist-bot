@@ -19,10 +19,14 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /app
 #FROM gcr.io/distroless/base-debian11 AS build-release-stage
 FROM debian AS build-release-stage
 
-USER nonroot:nonroot
+RUN addgroup --gid 1000 groupcontainer
+RUN adduser -u 1000 -G groupcontainer -h /home/containeruser -D containeruser
 
-WORKDIR /home/nonroot
+USER containeruser
 
-COPY --from=build-stage /app /home/nonroot/app
+
+WORKDIR /home/containeruser
+
+COPY --from=build-stage /app /home/containeruser/app
 
 ENTRYPOINT ["./app"]
