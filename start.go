@@ -29,6 +29,13 @@ func startHandler(c tg.Context) error {
 		return sendLanguageMenu(c, &ctx)
 	}
 	checkForInvitation(c, &ctx)
+	if c.Data() == "" {
+		ctx.ListPageNumber = 0
+		ctx.ListId = 0
+		ctx.WishId = 0
+		ctx.FriendId = 0
+		ctx.FriendsPageNumber = 0
+	}
 	ctx.State = DefaultState
 	return sendMainMenu(c, &ctx)
 }

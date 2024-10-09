@@ -15,7 +15,7 @@ services:
     build: ./
     environment:
       TOKEN: "${TG_TOKEN}"
-      PG: "host=postgres user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB_NAME} port=${POSTGRES_PORT}"
+      PG: "host=${POSTGRES_HOST} user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} dbname=${POSTGRES_DB_NAME} port=${POSTGRES_PORT}"
       AES_KEY: "${AES_KEY}"
     depends_on:
       - postgres

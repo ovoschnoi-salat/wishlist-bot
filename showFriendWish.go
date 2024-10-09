@@ -72,7 +72,6 @@ func sendFriendWish(c tg.Context, ctx *UserCtx) error {
 	}
 	keyboard := getFriendWishKeyboard(ctx, wish.ReservationFree, wish.ReservedBy)
 	return myEditOrSend(c, ctx, sb.String(), keyboard, tg.NoPreview)
-
 }
 
 func getFriendWishKeyboard(ctx *UserCtx, reservationFree bool, reservedBy int64) *tg.ReplyMarkup {

@@ -89,13 +89,13 @@ func sendFriendList(c tg.Context, ctx *UserCtx) error {
 	sb.WriteString("\n\n")
 	writeWishesToBuilder(&sb, ctx, wishes, pages)
 	keyboard := getFriendListKeyboard(wishes, ctx, ctx.ListPageNumber, pages)
-	return myEditOrSend(c, ctx, sb.String(), keyboard, tg.ModeMarkdownV2, tg.NoPreview)
+	return myEditOrSend(c, ctx, sb.String(), &keyboard, tg.ModeMarkdownV2, tg.NoPreview)
 }
 
-func getFriendListKeyboard(list []repository.Wish, ctx *UserCtx, page, totalPages int64) *tg.ReplyMarkup {
+func getFriendListKeyboard(list []repository.Wish, ctx *UserCtx, page, totalPages int64) tg.ReplyMarkup {
 	keyboard := append(getWishesSelectors(list, friendWishSelectorBtn, anotherFriendListPageBtn, page, totalPages),
 		[]tg.InlineButton{backToFriendListsBtn.GetInlineButton(ctx.Language)})
-	return &tg.ReplyMarkup{
+	return tg.ReplyMarkup{
 		InlineKeyboard: keyboard,
 	}
 }

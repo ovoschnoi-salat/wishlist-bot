@@ -133,7 +133,7 @@ func getListsSelectors(lists []f.List, btn MySelectorBtn) [][]tg.InlineButton {
 		if len(lists) > 4 {
 			row := make([]tg.InlineButton, len(lists)-3)
 			for i := 3; i < len(lists); i++ {
-				row[i] = btn.GetInlineButton(i, lists[i].ID)
+				row[i-3] = btn.GetInlineButton(i, lists[i].ID)
 			}
 			keyboard = append(keyboard, row)
 		}

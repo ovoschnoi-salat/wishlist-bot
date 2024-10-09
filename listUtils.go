@@ -53,7 +53,7 @@ func getWishesSelectors(wishes []repository.Wish, wishBtn MySelectorBtn, pageBtn
 			row = append(row, pageBtn.GetInlineButton("<<", page-1))
 		}
 		if page < totalPages-1 {
-			row = append(row, anotherMyListPageBtn.GetInlineButton(">>", page+1))
+			row = append(row, pageBtn.GetInlineButton(">>", page+1))
 		}
 		keyboard = append(keyboard, row)
 	}
