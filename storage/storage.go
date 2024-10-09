@@ -2,6 +2,7 @@ package storage
 
 import (
 	"encoding/gob"
+	"log"
 	"os"
 	"sync"
 )
@@ -44,6 +45,7 @@ func (s *Storage[T]) Load() error {
 	file, err := os.Open(fileName)
 	if err != nil {
 		if os.IsNotExist(err) {
+			log.Println("no storage file found: ", err)
 			return nil
 		}
 		return err
