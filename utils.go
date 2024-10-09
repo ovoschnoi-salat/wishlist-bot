@@ -124,16 +124,16 @@ func getListsSelectors(lists []f.List, btn MySelectorBtn) [][]tg.InlineButton {
 		)
 	} else {
 		if len(lists) > 0 {
-			row := make([]tg.InlineButton, len(lists))
+			row := make([]tg.InlineButton, 0, 3)
 			for i := 0; i < len(lists) && i < 3; i++ {
-				row[i] = btn.GetInlineButton(i, lists[i].ID)
+				row = append(row, btn.GetInlineButton(i, lists[i].ID))
 			}
 			keyboard = append(keyboard, row)
 		}
 		if len(lists) > 4 {
-			row := make([]tg.InlineButton, len(lists)-3)
+			row := make([]tg.InlineButton, 0, 3)
 			for i := 3; i < len(lists); i++ {
-				row[i-3] = btn.GetInlineButton(i, lists[i].ID)
+				row = append(row, btn.GetInlineButton(i, lists[i].ID))
 			}
 			keyboard = append(keyboard, row)
 		}
