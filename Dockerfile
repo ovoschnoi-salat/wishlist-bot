@@ -17,16 +17,12 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /app
 
 # Deploy the application binary into a lean image
 #FROM gcr.io/distroless/base-debian11 AS build-release-stage
-FROM debian AS build-release-stage
+FROM gcr.io/distroless/base-debian11 AS build-release-stage
 
-RUN addgroup --gid 1000 groupcontainer
-RUN adduser -u 1000 -G groupcontainer -h /home/containeruser -D containeruser
+WORKDIR /
 
-USER containeruser
+COPY --from=build-stage /app /app
 
+USER nonroot:nonroot
 
-WORKDIR /home/containeruser
-
-COPY --from=build-stage /app /home/containeruser/app
-
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["/app"]
