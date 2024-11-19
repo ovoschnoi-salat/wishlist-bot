@@ -6,7 +6,6 @@ FROM golang:1.22 AS build-stage
 WORKDIR /build
 
 COPY locales ./locales
-COPY pg ./pg
 COPY repository ./repository
 COPY storage ./storage
 COPY go.mod go.sum *.go ./
