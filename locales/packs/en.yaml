@@ -59,7 +59,7 @@ en:
   change_list_title_btn_text: "Change title"
   make_list_private_btn_text: "return access by list"
   make_list_public_btn_text: "Open access to all friends"
-  grant_friend_access_btn_text: "Access management"
+  show_my_list_access_list: "Access management"
   remove_list_btn_text: "Delete list"
   approve_list_removal_btn_text: "Confirm deletion"
 

@@ -14,7 +14,7 @@ type Wish struct {
 	ReservedBy      int64
 }
 
-func AddWish(db *gorm.DB, userId, listId int64, title string) (int64, error) {
+func AddWish(db *gorm.DB, listId int64, title string) (int64, error) {
 	wish := Wish{ListID: listId, Title: title}
 	err := db.Omit("reserved_by").Create(&wish).Error
 	return wish.ID, err
@@ -22,6 +22,11 @@ func AddWish(db *gorm.DB, userId, listId int64, title string) (int64, error) {
 
 func GetWish(db *gorm.DB, wishId int64) (wish Wish, err error) {
 	err = db.First(&wish, wishId).Error
+	return
+}
+
+func GetWishes(db *gorm.DB, listId, page int64) (wishes []Wish, err error) {
+	err = db.Where("list_id = ?", listId).Order("id").Offset(int(page * 6)).Limit(6).Find(&wishes).Error
 	return
 }
 

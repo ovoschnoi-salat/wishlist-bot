@@ -3,10 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
-	tg "gopkg.in/telebot.v3"
-	"gorm.io/gorm"
 	"strconv"
 	"strings"
+
+	tg "gopkg.in/telebot.v3"
+	"gorm.io/gorm"
 	"wishlist_bot/repository"
 )
 

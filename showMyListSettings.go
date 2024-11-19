@@ -2,26 +2,27 @@ package main
 
 import (
 	"fmt"
-	tg "gopkg.in/telebot.v3"
 	"strings"
+
+	tg "gopkg.in/telebot.v3"
 	"wishlist_bot/repository"
 )
 
 var (
-	changeListTitleBtn    = MyLocalizedButton{unique: "change_list_title", localKey: "change_list_title_btn_text"}
-	makeListPrivateBtn    = MyLocalizedButton{unique: "make_list_private", localKey: "make_list_private_btn_text"}
-	makeListPublicBtn     = MyLocalizedButton{unique: "make_list_public", localKey: "make_list_public_btn_text"}
-	grantFriendAccessBtn  = MyLocalizedButton{unique: "grant_friend_access", localKey: "grant_friend_access_btn_text"}
-	removeListBtn         = MyLocalizedButton{unique: "remove_list", localKey: "remove_list_btn_text"}
-	approveRemovalBtn     = MyLocalizedButton{unique: "remove_list_removal", localKey: "approve_list_removal_btn_text"}
-	backToListSettingsBtn = MyLocalizedButton{unique: "back_to_list_settings", localKey: "back_btn_text"}
+	changeListTitleBtn      = MyLocalizedButton{unique: "change_list_title", localKey: "change_list_title_btn_text"}
+	makeListPrivateBtn      = MyLocalizedButton{unique: "make_list_private", localKey: "make_list_private_btn_text"}
+	makeListPublicBtn       = MyLocalizedButton{unique: "make_list_public", localKey: "make_list_public_btn_text"}
+	showMyListAccessListBtn = MyLocalizedButton{unique: "show_my_list_access_list", localKey: "show_my_list_access_list_btn_text"}
+	removeListBtn           = MyLocalizedButton{unique: "remove_list", localKey: "remove_list_btn_text"}
+	approveRemovalBtn       = MyLocalizedButton{unique: "remove_list_removal", localKey: "approve_list_removal_btn_text"}
+	backToListSettingsBtn   = MyLocalizedButton{unique: "back_to_list_settings", localKey: "back_btn_text"}
 )
 
 func registerListSettingsHandlers(b *tg.Bot) {
 	b.Handle(&changeListTitleBtn, showChangeListTitleHandler)
 	b.Handle(&makeListPrivateBtn, makeListPrivateHandler)
 	b.Handle(&makeListPublicBtn, makeListOpenHandler)
-	b.Handle(&grantFriendAccessBtn, showMyListAccessHandler)
+	b.Handle(&showMyListAccessListBtn, showMyListAccessHandler)
 	b.Handle(&backToListSettingsBtn, showListSettingsHandler)
 	b.Handle(&removeListBtn, askToRemoveListHandler)
 	b.Handle(&approveRemovalBtn, removeListHandler)
@@ -31,6 +32,7 @@ func registerListSettingsHandlers(b *tg.Bot) {
 
 func showListSettingsHandler(c tg.Context) error {
 	ctx := GetUserState(c.Chat().ID)
+	ctx.FriendsPageNumber = 0
 	return sendListSettings(c, &ctx)
 }
 
@@ -70,7 +72,7 @@ func getListSettingsKeyboard(ctx *UserCtx, open bool) *tg.ReplyMarkup {
 		InlineKeyboard: [][]tg.InlineButton{
 			{changeListTitleBtn.GetInlineButton(ctx.Language)},
 			{makeListPublicBtn.GetInlineButton(ctx.Language)},
-			{grantFriendAccessBtn.GetInlineButton(ctx.Language)},
+			{showMyListAccessListBtn.GetInlineButton(ctx.Language)},
 			{removeListBtn.GetInlineButton(ctx.Language)},
 			{backToMyListBtn.GetInlineButton(ctx.Language)},
 		},

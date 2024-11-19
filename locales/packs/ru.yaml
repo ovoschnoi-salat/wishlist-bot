@@ -59,7 +59,7 @@ ru:
   change_list_title_btn_text: "Изменить название"
   make_list_private_btn_text: "Вернуть доступ по списку"
   make_list_public_btn_text: "Открыть доступ всем друзям"
-  grant_friend_access_btn_text: "Управление доступами"
+  show_my_list_access_list: "Управление доступами"
   remove_list_btn_text: "Удалить список"
   approve_list_removal_btn_text: "Подтвердить удаление"
 

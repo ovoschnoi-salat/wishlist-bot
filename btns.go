@@ -1,8 +1,9 @@
 package main
 
 import (
-	tg "gopkg.in/telebot.v3"
 	"strconv"
+
+	tg "gopkg.in/telebot.v3"
 )
 
 func registerAllHandlers(b *tg.Bot) {
@@ -22,6 +23,7 @@ func registerAllHandlers(b *tg.Bot) {
 	registerMyWishHandlers(b)
 	registerAddWishHandlers(b)
 	registerMiscHandlers(b)
+	registerMyListAccessHandlers(b)
 }
 
 type MyBasicButton struct {
