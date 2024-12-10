@@ -27,7 +27,6 @@ func registerListOfFriendsHandlers(b *tg.Bot) {
 func showListOfFriendsHandler(c tg.Context) error {
 	ctx := GetUserState(c.Chat().ID)
 	ctx.FriendId = 0
-	ctx.FriendsPageNumber = 0
 	return sendListOfFriendsMessage(c, &ctx)
 }
 
