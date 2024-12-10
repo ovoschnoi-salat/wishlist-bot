@@ -67,6 +67,7 @@ func writeMDV2LinkToBuilder(sb *strings.Builder, title, url string) {
 	sb.WriteString(EscapeMarkdownLink(url))
 	sb.WriteString(")")
 }
+
 func writeMDV2UserLinkToBuilder(sb *strings.Builder, user *f.User) {
 	if user.Name != "" {
 		writeMDV2LinkToBuilder(sb, user.Name, "t.me/"+user.Username)

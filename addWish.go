@@ -32,7 +32,7 @@ func readWishTitleHandler(c tg.Context) error {
 		return nil
 	}
 	ctx := GetUserState(c.Chat().ID)
-	wishId, err := repository.AddWish(db, ctx.UserId, ctx.ListId, newTitle)
+	wishId, err := repository.AddWish(db, ctx.ListId, newTitle)
 	if err != nil {
 		sendAlert(c, "error creating new wish: "+err.Error())
 		return nil

@@ -4,8 +4,8 @@ en:
   # main Menu
   main_menu: "Main menu"
   # btns
-  show_lists_btn_text: "Show lists"
-  show_friend_btn_text: "Show friends"
+  show_lists_btn_text: "Show my lists"
+  show_friend_btn_text: "Show friends and their lists"
   share_btn_text: "Share"
   settings_btn_text: "Settings"
 
@@ -55,11 +55,12 @@ en:
   open_list_access_msg: "list is open to all friends"
   private_list_access_msg: "list is open only for chosen friends"
   change_list_title_msg: "Enter list title"
+  ask_to_remove_list_msg: "Delete this list: "
   # btns
   change_list_title_btn_text: "Change title"
   make_list_private_btn_text: "return access by list"
   make_list_public_btn_text: "Open access to all friends"
-  show_my_list_access_list: "Access management"
+  show_my_list_access_list_btn_text: "Access management"
   remove_list_btn_text: "Delete list"
   approve_list_removal_btn_text: "Confirm deletion"
 

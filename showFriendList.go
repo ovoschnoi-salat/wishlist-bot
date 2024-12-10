@@ -87,9 +87,41 @@ func sendFriendList(c tg.Context, ctx *UserCtx) error {
 	sb.WriteString(localizer.Get(ctx.Language, "list_owner_msg"))
 	writeMDV2UserLinkToBuilder(&sb, &friend)
 	sb.WriteString("\n\n")
-	writeWishesToBuilder(&sb, ctx, wishes, pages)
+	writeFriendWishesToBuilder(&sb, ctx, wishes, pages)
 	keyboard := getFriendListKeyboard(wishes, ctx, ctx.ListPageNumber, pages)
 	return myEditOrSend(c, ctx, sb.String(), &keyboard, tg.ModeMarkdownV2, tg.NoPreview)
+}
+
+func writeFriendWishesToBuilder(sb *strings.Builder, ctx *UserCtx, wishes []repository.Wish, pages int64) {
+	if len(wishes) == 0 {
+		sb.WriteString(localizer.Get(ctx.Language, "no_wishes_msg"))
+	} else {
+		for i, wish := range wishes {
+			sb.WriteString(emojiNumbers[i])
+			sb.WriteByte(' ')
+			writeMDV2WishToBuilder(sb, &wish)
+			sb.WriteByte('\n')
+		}
+		addPageNumber(sb, ctx.Language, ctx.ListPageNumber, pages)
+	}
+}
+
+func writeMDV2WishToBuilder(sb *strings.Builder, wish *repository.Wish) {
+	if wish.ReservedBy != 0 {
+		sb.WriteByte('~')
+		writeMDV2WishLinkToBuilder(sb, wish)
+		sb.WriteByte('~')
+	} else {
+		writeMDV2WishLinkToBuilder(sb, wish)
+	}
+}
+
+func writeMDV2WishLinkToBuilder(sb *strings.Builder, wish *repository.Wish) {
+	if wish.Url != "" {
+		writeMDV2LinkToBuilder(sb, wish.Title, wish.Url)
+	} else {
+		sb.WriteString(EscapeMarkdown(wish.Title))
+	}
 }
 
 func getFriendListKeyboard(list []repository.Wish, ctx *UserCtx, page, totalPages int64) tg.ReplyMarkup {

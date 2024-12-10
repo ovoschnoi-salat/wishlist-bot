@@ -4,8 +4,8 @@ ru:
   # main menu
   main_menu: "Привет, это бот списка желаний\nПросто начни добавлять свои желания!"
   # btns
-  show_lists_btn_text: "Показать списки"
-  show_friend_btn_text: "Показать друзей"
+  show_lists_btn_text: "Показать мои списки"
+  show_friend_btn_text: "Показать друзей и их списки"
   share_btn_text: "Поделиться"
   settings_btn_text: "Настройки"
 
@@ -55,11 +55,12 @@ ru:
   open_list_access_msg: "список открыт для всех друзей"
   private_list_access_msg: "список открыт только для выбранных друзей"
   change_list_title_msg: "Введите название списка"
+  ask_to_remove_list_msg: "Удалить этот список: "
   # btns
   change_list_title_btn_text: "Изменить название"
   make_list_private_btn_text: "Вернуть доступ по списку"
   make_list_public_btn_text: "Открыть доступ всем друзям"
-  show_my_list_access_list: "Управление доступами"
+  show_my_list_access_list_btn_text: "Управление доступами"
   remove_list_btn_text: "Удалить список"
   approve_list_removal_btn_text: "Подтвердить удаление"
 

@@ -128,13 +128,18 @@ func makeListOpenHandler(c tg.Context) error {
 func askToRemoveListHandler(c tg.Context) error {
 	ctx := GetUserState(c.Chat().ID)
 	msg := localizer.Get(ctx.Language, "ask_to_remove_list_msg")
+	list, err := repository.GetListById(db, ctx.ListId)
+	if err != nil {
+		sendAlert(c, fmt.Sprintf("error retrieving list: %v", err))
+		return nil
+	}
 	keyboard := &tg.ReplyMarkup{
 		InlineKeyboard: [][]tg.InlineButton{
 			{approveRemovalBtn.GetInlineButton(ctx.Language)},
 			{backToListSettingsBtn.GetInlineButton(ctx.Language)},
 		},
 	}
-	return myEditOrSend(c, &ctx, msg, keyboard)
+	return myEditOrSend(c, &ctx, msg+list.Title+"?", keyboard)
 }
 
 func removeListHandler(c tg.Context) error {
